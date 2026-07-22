@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>S L V F Info8 — Consultoria & Tecnologia para Hotelaria/Turismo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #09090f; --bg2: #0d1120; --card: #111624;
+      --gold: #c9982a; --gold-light: #e0aa2e;
+      --text: #e8e4d8; --muted: #8a8578;
+      --border: rgba(201,152,42,0.18); --radius: 3px;
+    }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+    ul { list-style: none; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+    .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: block; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.1; color: var(--text); }
+    .btn-gold { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; background: var(--gold); color: var(--bg); font-size: 14px; font-weight: 600; letter-spacing: 0.04em; border-radius: var(--radius); border: none; cursor: pointer; transition: background 0.2s; }
+    .btn-gold:hover { background: var(--gold-light); }
+    .btn-outline { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border: 1px solid var(--border); color: var(--text); font-size: 14px; letter-spacing: 0.04em; border-radius: var(--radius); background: transparent; cursor: pointer; transition: border-color 0.2s; }
+    .btn-outline:hover { border-color: rgba(201,152,42,0.5); }
+
+    /* NAVBAR */
+    #navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 80px; transition: background 0.4s, border-color 0.4s; }
+    #navbar.scrolled { background: rgba(9,9,15,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 80px; }
+    .logo-wrap { display: flex; flex-direction: column; line-height: 1; }
+    .logo-main { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--gold); }
+    .logo-main span { color: var(--text); }
+    .logo-sub { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a { font-size: 14px; color: var(--muted); letter-spacing: 0.03em; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--text); padding: 6px; }
+    #mobile-menu { display: none; flex-direction: column; background: rgba(9,9,15,0.98); backdrop-filter: blur(12px); border-top: 1px solid var(--border); padding: 1rem 2rem 1.5rem; gap: 0; }
+    #mobile-menu a { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 16px; color: var(--text); }
+    #mobile-menu .btn-gold { margin-top: 1rem; justify-content: center; }
+
+    /* HERO */
+    #hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1800&h=1200&fit=crop&auto=format'); background-size: cover; background-position: center; }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, #09090f 50%, rgba(9,9,15,0.5)); }
+    .hero-overlay2 { position: absolute; inset: 0; background: linear-gradient(to top, #09090f, transparent 60%); }
+    .hero-inner { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; padding-top: 8rem; padding-bottom: 6rem; }
+    .hero-badge { display: inline-flex; align-items: center; border: 1px solid rgba(201,152,42,0.4); border-radius: var(--radius); padding: 6px 12px; margin-bottom: 2rem; }
+    .hero-badge span { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
+    .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 700; line-height: 1.08; color: var(--text); margin-bottom: 1.5rem; }
+    .hero-title em { color: var(--gold); font-style: normal; }
+    .hero-desc { font-size: 18px; color: var(--muted); line-height: 1.7; margin-bottom: 2.5rem; max-width: 500px; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .stat-card { background: rgba(17,22,36,0.8); backdrop-filter: blur(8px); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+    .stat-value { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+    .stat-label { font-size: 14px; color: var(--muted); }
+    .hero-scroll { position: relative; display: flex; justify-content: center; padding-bottom: 2rem; }
+    .hero-scroll a { color: var(--gold); animation: bounce 2s infinite; }
+    @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+
+    /* SERVICES */
+    #servicos { padding: 7rem 0; background: var(--bg); }
+    .services-header { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: end; margin-bottom: 4rem; }
+    .services-header p { color: var(--muted); line-height: 1.7; }
+    .services-title em { color: var(--gold); font-style: normal; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--border); }
+    .service-card { padding: 2rem; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: background 0.3s; cursor: default; }
+    .service-card:nth-child(3n) { border-right: none; }
+    .service-card:nth-child(n+4) { border-bottom: none; }
+    .service-card:hover { background: var(--card); }
+    .service-icon { width: 48px; height: 48px; border: 1px solid var(--border); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; transition: border-color 0.3s; }
+    .service-card:hover .service-icon { border-color: rgba(201,152,42,0.5); }
+    .service-icon svg { color: var(--gold); }
+    .service-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 600; color: var(--text); margin-bottom: 0.75rem; }
+    .service-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    /* TECHNOLOGIES */
+    #tecnologias { padding: 7rem 0; background: var(--bg2); }
+    .tech-header { text-align: center; margin-bottom: 4rem; }
+    .tabs { display: flex; justify-content: center; gap: 4px; padding: 4px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); width: fit-content; margin: 0 auto 3rem; }
+    .tab-btn { padding: 8px 20px; font-size: 14px; font-weight: 500; border: none; border-radius: var(--radius); background: transparent; color: var(--muted); cursor: pointer; transition: all 0.2s; }
+    .tab-btn.active { background: var(--gold); color: var(--bg); }
+    .tab-btn:not(.active):hover { color: var(--text); }
+    .tech-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+    .tech-card { border: 1px solid var(--border); background: var(--bg); border-radius: var(--radius); padding: 1.5rem 1rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; transition: all 0.3s; }
+    .tech-card:hover { border-color: rgba(201,152,42,0.5); background: var(--card); }
+    .tech-card svg { color: rgba(201,152,42,0.5); transition: color 0.3s; }
+    .tech-card:hover svg { color: var(--gold); }
+    .tech-card span { font-weight: 600; font-size: 15px; color: var(--text); text-align: center; }
+    .tech-card small { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .tech-card.wide { grid-column: 1 / -1; }
+    .bi-panel { margin-top: 3rem; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
+    .bi-panel h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--text); margin-bottom: 1rem; }
+    .bi-panel p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 1.5rem; }
+    .bi-list li { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); margin-bottom: 6px; }
+    .bi-list li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+    .bi-img { border-radius: var(--radius); overflow: hidden; height: 260px; background: var(--bg2); }
+    .bi-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* EXPERIENCE */
+    #experiencia { padding: 7rem 0; background: var(--bg); overflow: hidden; }
+    .exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .exp-img-wrap { position: relative; }
+    .exp-img { border-radius: var(--radius); overflow: hidden; height: 500px; background: var(--bg2); position: relative; }
+    .exp-img img { width: 100%; height: 100%; object-fit: cover; }
+    .exp-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(9,9,15,0.6), transparent); }
+    .exp-badge { position: absolute; bottom: -1.5rem; right: -1.5rem; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+    .exp-badge-num { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+    .exp-badge-label { font-size: 13px; color: var(--muted); line-height: 1.4; }
+    .exp-content p { color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
+    .exp-content p:last-of-type { margin-bottom: 2.5rem; }
+    .sectors-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .sector-card { display: flex; align-items: center; gap: 12px; padding: 1rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); }
+    .sector-card svg { color: var(--gold); flex-shrink: 0; }
+    .sector-card span { font-size: 14px; color: var(--text); }
+
+    /* ABOUT */
+    #sobre { padding: 7rem 0; background: var(--gold); }
+    .about-grid { display: grid; grid-template-columns: 7fr 5fr; gap: 3rem; align-items: center; }
+    .about-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(9,9,15,0.6); display: block; margin-bottom: 1rem; }
+    .about-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--bg); line-height: 1.1; margin-bottom: 1.5rem; }
+    .about-desc { font-size: 17px; color: rgba(9,9,15,0.75); line-height: 1.7; }
+    .about-list { display: flex; flex-direction: column; gap: 12px; }
+    .about-item { display: flex; align-items: flex-start; gap: 12px; background: rgba(9,9,15,0.1); border-radius: var(--radius); padding: 1rem; }
+    .about-item::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: rgba(9,9,15,0.5); flex-shrink: 0; margin-top: 5px; }
+    .about-item span { font-size: 14px; color: rgba(9,9,15,0.85); line-height: 1.6; }
+
+    /* CONTACT */
+    #contato { padding: 7rem 0; background: var(--bg2); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+    .contact-info p { color: var(--muted); line-height: 1.7; margin-bottom: 2.5rem; }
+    .contact-items { display: flex; flex-direction: column; gap: 1.25rem; }
+    .contact-item { display: flex; align-items: center; gap: 1rem; }
+    .contact-icon { width: 40px; height: 40px; border: 1px solid var(--border); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .contact-icon svg { color: var(--gold); }
+    .contact-item span { font-size: 14px; color: var(--text); }
+    .contact-form { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .form-input, .form-textarea { width: 100%; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-family: 'Inter', sans-serif; font-size: 14px; padding: 12px 16px; outline: none; transition: border-color 0.2s; }
+    .form-input::placeholder, .form-textarea::placeholder { color: rgba(138,133,120,0.5); }
+    .form-input:focus, .form-textarea:focus { border-color: rgba(201,152,42,0.5); }
+    .form-textarea { resize: none; height: 120px; }
+    .form-submit { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; background: var(--gold); color: var(--bg); font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; border: none; border-radius: var(--radius); cursor: pointer; transition: background 0.2s; }
+    .form-submit:hover { background: var(--gold-light); }
+    .form-success { display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 3rem 1rem; }
+    .form-success-icon { width: 56px; height: 56px; border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+    .form-success-icon svg { color: var(--gold); }
+    .form-success h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .form-success p { font-size: 14px; color: var(--muted); }
+
+    /* FOOTER */
+    footer { background: var(--bg); border-top: 1px solid var(--border); padding: 2.5rem 0; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .footer-copy { font-size: 12px; color: var(--muted); text-align: right; line-height: 1.6; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .stats-grid { display: none; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .tech-grid { grid-template-columns: repeat(3, 1fr); }
+      .bi-panel { grid-template-columns: 1fr; }
+      .exp-grid { grid-template-columns: 1fr; }
+      .exp-img { height: 320px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .footer-copy { text-align: left; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: block; }
+      .services-grid { grid-template-columns: 1fr; }
+      .tech-grid { grid-template-columns: 1fr 1fr; }
+      .services-header { grid-template-columns: 1fr; }
+      .sectors-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="navbar">
+  <div class="container nav-inner">
+    <a href="#" class="logo-wrap">
+      <span class="logo-main">SLVF8<span>Tecnology</span></span>
+      <span class="logo-sub">Consulting &amp; Estrategy</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#servicos">Serviços</a>
+      <a href="#tecnologias">Tecnologias</a>
+      <a href="#experiencia">Experiência</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+      <a href="#contato" class="btn-gold">Fale Conosco</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <svg id="icon-menu" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg id="icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div id="mobile-menu">
+    <a href="#servicos">Serviços</a>
+    <a href="#tecnologias">Tecnologias</a>
+    <a href="#experiencia">Experiência</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#contato">Contato</a>
+    <a href="#contato" class="btn-gold">Fale Conosco</a>
+  </div>
+</div>
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-overlay2"></div>
+  <div class="container hero-inner">
+    <div>
+      <div class="hero-badge"><span>+20 anos em Tecnologia para Hotelaria &amp; Turismo</span></div>
+      <h1 class="hero-title">Tecnologia que <em>transforma</em> operações hoteleiras</h1>
+      <p class="hero-desc">Implantação, consultoria, suporte e análise em ERPs especializados para Hotelaria. Expertise em bancos de dados e Power BI para decisões mais inteligentes.</p>
+      <div class="hero-btns">
+        <a href="#servicos" class="btn-gold">Conheça os Serviços <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a href="#contato" class="btn-outline">Solicitar Proposta</a>
+      </div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-value">20+</div><div class="stat-label">Anos de Experiência</div></div>
+      <div class="stat-card"><div class="stat-value">200+</div><div class="stat-label">Projetos Entregues</div></div>
+      <div class="stat-card"><div class="stat-value">5</div><div class="stat-label">Sistemas ERP Dominados</div></div>
+      <div class="stat-card"><div class="stat-value">3</div><div class="stat-label">Bancos de Dados</div></div>
+    </div>
+  </div>
+  <div class="hero-scroll"><a href="#servicos"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></a></div>
+</section>
+
+<section id="servicos">
+  <div class="container">
+    <div class="services-header">
+      <div>
+        <span class="tag">O que fazemos</span>
+        <h2 class="section-title services-title">Serviços completos para <em>toda a jornada</em> do seu ERP</h2>
+      </div>
+      <p>Da implantação ao suporte contínuo, oferecemos a expertise necessária para que sua tecnologia trabalhe a favor do seu negócio.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card"><div class="service-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div><h3>Implantação de ERP</h3><p>Implantação completa e parametrização de sistemas ERP para o setor hoteleiro, Administrativo e A&B. Mapeamento de processos, migração de dados, treinamento de equipes.</p></div>
+      <div class="service-card"><div class="service-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>Consultoria Especializada</h3><p>Diagnóstico de processos, análise de aderência e recomendações estratégicas para otimização operacional em Hotelaria e Turismo.</p></div>
+      <div class="service-card"><div class="service-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 2.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"/></svg></div><h3>Suporte Técnico</h3><p>Atendimento ágil, especializado para manutenção, correção de falhas e evolução contínua dos sistemas em produção sendo através de Whatsapp ou presencial(Aprovação de Orçamento) </p></div>
+      <div class="service-card"><div class="service-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><h3>Análise de Dados</h3><p>Extração, tratamento e análise de dados em SQL, Oracle e PostgreSQL. Geração de insights para tomada de decisão gerencial.</p></div>
+      <div class="service-card"><div class="service-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/></svg></div><h3>Gestão de Projetos</h3><p>Condução de projetos de tecnologia do planejamento à entrega, com metodologia adaptada às particularidades do setor de Hospedagem.</p></div>
+      <div class="service-card"><div class="service-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><h3> BI &amp; Dashboards</h3><p>Criação de relatórios, painéis gerenciais e visualizações interativas e integradas às bases de dados do seu ERP.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="tecnologias">
+  <div class="container">
+    <div class="tech-header">
+      <span class="tag">Stack Tecnológico</span>
+      <h2 class="section-title">Plataformas &amp; Ferramentas</h2>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn" data-tab="erp">Sistemas ERP</button>
+      <button class="tab-btn" data-tab="integrated">Ferramentas Integradas</button>
+      <button class="tab-btn" data-tab="db">Bancos de Dados</button>
+      <button class="tab-btn" data-tab="bi">Analytics &amp; BI</button>
+    </div>
+    <div class="tab-content active" id="tab-erp">
+      <div class="tech-grid">
+        <div class="tech-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg><span>Desbravador</span><small>ERP Hoteleiro</small></div>
+        <div class="tech-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg><span>CMNet</span><small>ERP Hoteleiro</small></div>
+        <div class="tech-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg><span>TOTVS</span><small>ERP Corporativo</small></div>
+        <div class="tech-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg><span>CMSol</span><small>ERP Hoteleiro</small></div>
+        <div class="tech-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg><span>Thex</span><small>ERP Hoteleiro</small></div>
+      </div>
+    </div>
+    <div class="tab-content active" id="tab-integrated">
+      <div class="tech-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="tech-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg><span>Chave Eletrônica</span><small>Integração com o equipamento da chave</small></div>
+        <div class="tech-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg><span>Comanda Eletrônica</span><small>Facilidade de lançamentos e recebimentos</small></div>
+        <div class="tech-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg><span>Cardápio Digital</span><small>Cardapio dos PDV´S no Celular</small></div>
+        <div class="tech-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg><span>Fast Check-In</span><small>Check-in On-line</small></div>
+        <div class="tech-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg><span>Higs, CMnetReservas, OTA´s</span><small>reservas On-Line</small></div>
+        <div class="tech-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg><span>Integração com Catracas de Entrada</span><small>Catracas em parques e Resort</small></div>
+        <div class="tech-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg><span>Integra NF´s de Entrada</span><small>NF Fornecedores</small></div>
+        <div class="tech-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg><span>FNRH On-LIne</span><small>Integra Governo FNRH</small></div>
+        <div class="tech-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg><span>Criação de Relatórios Personalizados</span><small>Relatórios Operacionais e Gerenciais</small></div>
+      </div>
+    </div>
+    <div class="tab-content" id="tab-db">
+      <div class="tech-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="tech-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg><span>SQLite</span><small>Banco de Dados</small></div>
+        <div class="tech-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg><span>Oracle</span><small>Banco de Dados</small></div>
+        <div class="tech-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg><span>PostgreSQL</span><small>Banco de Dados</small></div>
+      </div>
+    </div>
+    <div class="tab-content" id="tab-bi">
+      <div class="tech-grid">
+        <div class="tech-card wide"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span>Business Intelligence</span><small>Analytics &amp; BI</small></div>
+      </div>
+      <div class="bi-panel">
+        <div>
+          <h3>Dashboards que revelam o potencial do seu negócio</h3>
+          <p>Criação de painéis gerenciais interativos de <B class="I">Business Intelligence</B>, integrados diretamente às bases de dados dos ERPs hoteleiros.</p>
+          <ul class="bi-list">
+            <li>Relatórios de ocupação e RevPAR</li>
+            <li>Análise de canais de distribuição</li>
+            <li>Dashboards financeiros e de controladoria</li>
+            <li>KPIs operacionais em tempo real</li>
+          </ul>
+        </div>
+        <div class="bi-img"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&h=400&fit=crop&auto=format" alt="Dashboard Power BI" /></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experiencia">
+  <div class="container">
+    <div class="exp-grid">
+      <div class="exp-img-wrap">
+        <div class="exp-img"><img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=700&h=600&fit=crop&auto=format" alt="Hotel de luxo" /></div>
+        <div class="exp-badge"><div class="exp-badge-num">20+</div><div class="exp-badge-label">anos em Hotelaria,<br/>Hospedagem e Turismo</div></div>
+      </div>
+      <div class="exp-content">
+        <span class="tag">Nossa Experiência</span>
+        <h2 class="section-title" style="margin-bottom:1.5rem">Décadas de expertise no setor que mais exige precisão</h2>
+        <p>Com mais de 20 anos de atuação em Hotelaria, Hospedagem e Turismo, desenvolvemos uma visão única que combina o conhecimento profundo dos processos operacionais com a expertise técnica em sistemas ERP.</p>
+        <p>Entendemos o dia a dia de um hotel, de uma pousada e de uma agência de viagens — por isso, nossas soluções são pensadas para o seu negócio.</p>
+        <div class="sectors-grid">
+          <div class="sector-card"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Hotéis &amp; Resorts</span></div>
+          <div class="sector-card"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg><span>Pousadas &amp; Apart-Hotéis</span></div>
+          <div class="sector-card"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Agências de Turismo</span></div>
+          <div class="sector-card"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg><span>Operadoras de Viagem</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sobre">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <span class="about-tag">Por que nos escolher</span>
+        <h2 class="about-title">A empresa que fala a língua do seu setor</h2>
+        <p class="about-desc">Não somos apenas desenvolvedores ou consultores de TI. Somos profissionais que viveram a rotina hoteleira e agora aplicam essa experiência para entregar tecnologia que realmente funciona.</p>
+      </div>
+      <div class="about-list">
+        <div class="about-item"><span>Domínio completo dos principais ERPs hoteleiros do mercado</span></div>
+        <div class="about-item"><span>Integração nativa entre sistemas e ferramentas de análise</span></div>
+        <div class="about-item"><span>Atendimento personalizado e comprometimento com resultados</span></div>
+        <div class="about-item"><span>Conhecimento real dos processos de front desk, revenue e financeiro</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contato">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <span class="tag">Entre em Contato</span>
+        <h2 class="section-title" style="margin-bottom:1.5rem">Vamos conversar sobre o seu projeto</h2>
+        <p>Seja uma implantação, treinamento, uma consultoria pontual ou dashboards, estamos prontos para propor a melhor solução on-line ou presencial.<on-line></on-line>.</p>
+        <div class="contact-items">
+          <div class="contact-item"><div class="contact-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><span>slvf8@outlook.com</span></div>
+          <div class="contact-item"><div class="contact-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 2.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"/></svg></div><span>+55 (11) 98025-9243</span></div>
+          <div class="contact-item"><div class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M13.601 2.326A7.926 7.926 0 0 0 8.002 0C3.58 0 .002 3.58.002 8c0 1.41.37 2.77 1.07 3.97L0 16l4.17-1.09A7.94 7.94 0 0 0 8.002 16c4.42 0 8-3.58 8-8 0-2.13-.83-4.14-2.401-5.674zM8.002 14.5c-1.27 0-2.52-.34-3.6-.99l-.26-.15-2.47.65.66-2.41-.17-.25a6.49 6.49 0 0 1-1.01-3.45c0-3.59 2.92-6.5 6.5-6.5 1.74 0 3.37.68 4.6 1.91a6.47 6.47 0 0 1 1.9 4.59c0 3.58-2.92 6.5-6.5 6.5z"/>
+              <path d="M11.2 9.8c-.19-.09-1.12-.55-1.29-.61-.17-.06-.29-.09-.41.09-.12.18-.47.61-.58.74-.11.12-.21.13-.4.04-.19-.09-.8-.29-1.52-.93-.56-.5-.93-1.12-1.04-1.31-.11-.19-.01-.29.08-.38.08-.08.19-.21.28-.31.09-.1.12-.18.18-.3.06-.12.03-.23-.01-.32-.04-.09-.41-.98-.56-1.34-.15-.36-.3-.31-.41-.32-.11-.01-.23-.01-.35-.01-.12 0-.32.05-.49.23-.17.18-.65.64-.65 1.56 0 .92.67 1.81.76 1.93.09.12 1.32 2.02 3.2 2.83.45.19.8.3 1.07.38.45.14.86.12 1.18.07.36-.05 1.12-.46 1.28-.9.16-.44.16-.82.11-.9-.05-.08-.17-.12-.36-.21z"/>
+            </svg>
+          </div>
+          <span><a href="https://wa.me/5511980259243" target="_blank">WhatsApp Clique Aqui</a></span>
+        </div>
+          <div class="contact-item"><div class="contact-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><span>Brasil — Atendimento nacional</span></div>
+        </div>
+      </div>
+      <div class="contact-form">
+  <form id="contact-form">
+    <div class="form-group">
+      <label class="form-label" for="nome">Nome completo</label>
+      <input class="form-input" type="text" id="nome" name="from_name" placeholder="Seu nome" required />
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="Company">Empresa</label>
+      <input class="form-input" type="text" id="Company" name="Company" placeholder="Nome da empresa" required />
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="email">E-mail</label>
+      <input class="form-input" type="email" id="email" name="reply_to" placeholder="seuemail@dominio.com" required />
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="Assunto">Assunto</label>
+      <input class="form-input" type="text" id="assunto" name="subject" placeholder="Assunto do e-mail" required></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="mensagem">Mensagem</label>
+      <textarea class="form-textarea" id="mensagem" name="message" placeholder="Sua mensagem" required></textarea>
+    </div>
+    <button type="submit" class="form-submit">Enviar</button>
+  </form>
+</div>
+        <div class="form-success" id="form-success">
+          <div class="form-success-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3>Mensagem enviada!</h3>
+          <p>Retornaremos em breve. Obrigado pelo contato.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <div class="logo-wrap">
+     <a href="#" class="logo-wrap">
+      <span class="logo-main">SLVF8<span>Tecnology</span></span>
+      <span class="logo-sub">Consulting &amp; Estrategy</span>
+    </a>
+    </div>
+    <p class="footer-copy">&copy; 2025 SLVF Info8. Todos os direitos reservados.<br/>Especialistas em ERP, Banco de Dados e Power BI para Hotelaria e Turismo.</p>
+  </div>
+</footer>
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40));
+
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const iconMenu = document.getElementById('icon-menu');
+  const iconClose = document.getElementById('icon-close');
+  hamburger.addEventListener('click', () => {
+    const open = mobileMenu.style.display === 'flex';
+    mobileMenu.style.display = open ? 'none' : 'flex';
+    iconMenu.style.display = open ? 'block' : 'none';
+    iconClose.style.display = open ? 'none' : 'block';
+  });
+  mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
+    mobileMenu.style.display = 'none';
+    iconMenu.style.display = 'block';
+    iconClose.style.display = 'none';
+  }));
+
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  document.getElementById('contact-form').addEventListener('submit', e => {
+    e.preventDefault();
+    document.getElementById('contact-form').style.display = 'none';
+    document.getElementById('form-success').style.display = 'flex';
+  });
+</script>
+<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script type="text/javascript">
+  (function(){
+    emailjs.init("oYG599pUH_5KSCC6c"); // substitua pelo seu Public Key
+  })();
+
+  document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    emailjs.sendForm('service_q20lxb7', 'template_3qswxl7', this)
+      .then(function() {
+        // Se envio deu certo
+        document.getElementById('contact-form').style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+      }, function(error) {
+        alert('Erro ao enviar: ' + JSON.stringify(error));
+      });
+  });
+</script>
+</body>
+</html>
+
+
+
+<!--https://dashboard.emailjs.com/admin/templates/y1f552q o site o emailjs
